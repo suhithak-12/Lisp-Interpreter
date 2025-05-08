@@ -1,0 +1,57 @@
+;;; LISP Programming Assignment
+;;; Suhithareddy Kantareddy
+
+
+;;; 1) insert-atom-list add number in list
+(defun insert-atom-list (x L)
+  (cond ((null L) (if (atom x) (list x) (list x)))
+        ((atom x) (cons x L))
+        (t (append L (list x)))))
+
+;;; 2) insert-special add number spelization 
+(defun insert-special (x y z L)
+  (cond ((or (null L) (null (cdr L))) L)
+        ((and (equal (car L) y) (equal (cadr L) z))
+         (cons y (cons x (cons z (cddr L)))))
+        (t (cons (car L) (insert-special x y z (cdr L))))))
+
+;;; 3) remove-duplicate-item remove duplicate charecter 
+(defun remove-duplicate-item (L)
+  (cond ((null L) nil)
+        ((member (car L) (cdr L)) (remove-duplicate-item (cdr L)))
+        (t (cons (car L) (remove-duplicate-item (cdr L))))))
+
+;;; 4) remove-lists 
+(defun remove-lists (L)
+  (cond ((null L) nil)
+        ((atom (car L)) (cons (car L) (remove-lists (cdr L))))
+        (t (remove-lists (cdr L)))))
+
+;;; 5) count-match-items counts the number of spatially matching atoms 
+(defun count-match-items (L1 L2)
+  (cond ((or (null L1) (null L2)) 0)
+        ((and (atom (car L1)) (atom (car L2)) (equal (car L1) (car L2)))
+         (+ 1 (count-match-items (cdr L1) (cdr L2))))
+        (t (count-match-items (cdr L1) (cdr L2)))))
+
+;;; 6) filter takes as input and returns a list of only those elements
+(defun filter (P L)
+  (cond ((null L) nil)
+        ((funcall P (car L)) (cons (car L) (filter P (cdr L))))
+        (t (filter P (cdr L)))))
+
+;;; 7) my-reverse reverse order
+(defun my-reverse-helper (L acc)
+  (if (null L) acc
+      (my-reverse-helper (cdr L) (cons (car L) acc))))
+
+(defun my-reverse (L)
+  (my-reverse-helper L nil))
+
+
+;;; Extra Credit: 8) z-following-x  
+(defun z-following-x (L x z)
+  (cond ((null L) 'NO)
+        ((null (cdr L)) 'NO)
+        ((and (equal (car L) x) (equal (cadr L) z)) 'YES)
+        (t (z-following-x (cdr L) x z))))
