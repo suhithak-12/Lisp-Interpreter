@@ -1,4 +1,4 @@
-;;; LISP Programming Assignment
+;;; LISP Interpreter
 ;;; Suhithareddy Kantareddy
 
 
